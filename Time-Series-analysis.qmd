@@ -1,0 +1,249 @@
+---
+title: "HDAT9700: Assessment 3 - Chapters 7-8"
+subtitle: "Time series analysis"
+author: Maggie Burmeister
+date: 08/11/2024
+output:
+  html_document:
+    highlight: tango
+    df_print: paged
+    toc: true
+    toc_float: true
+    number_sections: true
+    fig_width: 14
+    fig_height: 24
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Load data
+df <- read.csv('flhom.csv')
+
+# Load libraries
+
+```
+
+## Student declaration
+
+***Instructions: Indicate that you understand and agree with the following three statements by typing an x in the square brackets below, e.g. \[x\].***
+
+I declare that this assessment item is my own work, except where acknowledged, and has not been submitted for academic credit elsewhere or previously, or produced independently of this course (e.g. for a third party such as your place of employment) and acknowledge that the assessor of this item may, for the purpose of assessing this item: (i) Reproduce this assessment item and provide a copy to another member of the University; and/or (ii) Communicate a copy of this assessment item to a plagiarism checking service (which may then retain a copy of the assessment item on its database for the purpose of future plagiarism checking).
+
+-   [x] I understand and agree
+
+I certify that I have read and understood the University Rules in respect of Student Academic Misconduct.
+
+-   [x] I understand and agree
+
+I have a backup copy of the assessment.
+
+-   [x] I understand and agree
+
+## Statement on the use of generative AI
+
+***Instructions: If you have used Generative AI tools (e.g. ChatGPT, copilot, etc) to help complete this assessment, please state the details here. Your statement should include (i) the name of tool used; (ii) sections or questions that were answered with the help of generative AI; (iii) How generative AI was used. For example you might write "I used Microsoft Copilot to generate template R code for questions 1 and 2, and to help draft my written response to question 4." If you have not used Generative AI to help complete your assessment, please state this.***
+
+## Section 1
+
+### Question 1
+
+Describe the pre-intervention time series of total firearm deaths per 100,000 people (Figure 1a) in terms of trend and seasonality. Note the figure is easier to view in the pdf version of the article, as opposed to the online version.
+
+The figure 1a showed a general declining trend from 1978 to 1996, as it is indicated by the overall downward slope of total firearm mortality rates. Although this decreasing trend was present even before the 1996 Australia firearm law intervention,it raises questions regarding the attribution of mortality reductions directly to the legislation. The authors mentioned that this decline may have been part of a pre-existing downward trend rather than solely due to the intervention itself. (As from the paper: They may simply capture a decreasing trend, or an acceleration of a decreasing trend in the firearm-related mortality rate that would have occurred even without the set of nationally implemented gun regulations).
+
+Regarding seasonal patterns, I could not find that it was not descried in the figure or accompanying analysis.
+
+### Question 2
+
+The authors propose a model that "takes the first difference of the data and estimates an ARIMA model of auto regressive order 1". In your own words, summaries what it means and what the purpose of (i) taking the first difference and (ii) including an auto regressive order 1.
+
+i)  Taking the 1st difference: this step involves subtracting the value of the data point at one time period from the value at the previous period.As it mentioned in the paper, a standard method of removing a random walk is to convert a time series to first difference which mean converting the original time series data into a series of differences between consecutive observations. The purpose of this transformation is to remove random walk which drifts up and down in a non-consistent direction for long-term trend and make data stationary. This would help to stabilize the data, making it easier to identify patterns and relationships within the time series.
+
+ii) Including an auto regressive order 1: As it specified in the paper, one such pragmatic specification is the ARIMA model that allows the direct specification of the number of (lags) past periods which mean the current value of time series is affected by its immediately preceding value. The "order 1" suggested that the model uses one prior data point to predict the current value. This captures short-term dependencies in the data, helping to model patterns where the value at a given time is correlated with its recent past values, making predictions more precise and reflective of past behaviors.
+
+### Question 3
+
+In Table 3, the authors present the results of a robustness check for the ARIMA modelling results presented in Table 1. Explain in your own words (i) what is the role of the robustness check, (ii) how is it implemented, and (iii) what is the interpretation.
+
+i)  Role of the robustness check: The purpose of robustness check is to test whether the the ARIMA model used to analyze the data is appropriately specified and reliable. As it mentioned in the paper, the goal of the specification check is to test whether the model truly captures the causal effects of the 1996 Australian firearm law or it might produce invalid or misleading results due to underlying trends or other unrelated factors. The goal is to ensure that the model gives a valid answer.
+
+ii) How is it implemented: The robustness check include introducing "artificial" interventions in years prior to 1996 and testing the ARIMA model on these pre-intervention periods. In the Fig 1, beside Trends in firearm and pre and post artificial law implementations, the authors created hypothetical scenarios where the firearm law was enacted from 1990 to 1995, and then assessed whether the model would detect any significant changes in firearm mortality during those artificially years. If the model detects statistically significant effects in those years where no actual intervention occurred, it reveals that the model may capture trends unrelated to the law, therefore, raising concerns about its validity.
+
+iii) Interpretation: As in Table 3 showed the results of robustness check, when the ARIMA model is applied to those artificial intervention years, it leads to statistically insignificant effects on all firearm mortality types. This result suggests that the ARIMA model is appropriately specified and able to isolate the impact of the actual 1996 firearm law. On the other hand, if significant changes were detected during those artificial interventions, it would imply that the original findings could be influenced by factors other than the actual law, reducing the credibility of the causal claims.
+
+## Section 2
+
+```{r read-data}
+df <- read.csv("flhom.csv", header=TRUE)
+head(df)
+```
+
+### Question 1
+
+Create a plot of the homicide rate over time, as if you were preparing it for inclusion in a report or publication.
+
+```{r plot_hom_rate_with_trend_over_time}
+library(ggplot2)
+library(zoo)
+
+# Convert date column to Date format
+df$date <- as.Date(paste0("01-", df$date), format = "%d-%b-%y")
+
+# Calculate the rolling mean (12-month rolling window)
+df$rolling_mean <- rollmean(df$hom_rate, k = 12, fill = NA, align = "center")
+
+# Plot
+ggplot(df, aes(x = date, y = hom_rate)) +
+  geom_line(color = "lightblue") +
+  geom_point(color = "blue") + 
+  geom_line(aes(y = rolling_mean), color = "red", size = 1) +
+  ggtitle("Homocide Rate with Trend Over Time") +
+  xlab("Date") +
+  ylab("Homocide Rate") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r boxplot_over_time}
+library(lubridate)
+# Extract the month
+df$month <- month(df$date, label = TRUE, abbr = TRUE)
+
+# Boxplot
+ggplot(df, aes(x = month, y = hom_rate, fill = month)) +
+  geom_boxplot(color = "black", outlier.color = "coral", outlier.shape = 16) +
+  ggtitle("Seasonal Distribution of Homocide Rate") +
+  xlab("Month") +
+  ylab("Homocide Rate") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16),
+    axis.title.x = element_text(size = 12),
+    axis.title.y = element_text(size = 12),
+    axis.text.x = element_text(size = 10, angle = 0)
+  ) +
+  scale_fill_brewer(palette = "Set3")
+  
+```
+
+```{r}
+summary(df)
+
+```
+
+### Question 2
+
+Describe the homicide rate time series in terms of the trend, seasonality, and outliers. Provide appropriate plots and summary statistics to support your statements. i) Trend: Look at the "Homicide Rate with Trend Over Time", there is a general upward trend in the homicide rate over the observed time period. This suggests an increasing tendency in homicide rates over time. ii) Seasonality: The boxplot of homicide rates by month indicates some level of seasonality. For example, rates seems to be generally higher in Janurary and December, suggesting a possible seasonal increase during the winter months. iii) Outliers: The boxplot shows several outliers, particularly in months like February, March, April, July and October. The minimum and maximum values of the homicide rates also reveal occasional spikes or drops in the data.
+
+Summary statistic of hom_rate
+- Mean: 0.5116
+- SD: 0.0737
+- Minimum: 0.3139
+- Maximum: 0.7840
+- Interquartile Range (IQR): Q1 = 0.4593, Q2 = 0.5016 and Q3 = 0.5585
+
+
+### Question 3
+
+Estimate the effect of the stand-your-ground law using segmented regression and ARIMA. Comment on the fit/appropriateness of each model, and state which model you believe best describes the association between the intervention and the homicide rate over time.
+
+```{r}
+install.packages("segmented", repos = 'https://cran.ms.unimelb.edu.au/')
+install.packages("nlme",repos = 'https://cran.ms.unimelb.edu.au/')
+```
+
+#### Segmented Regression
+
+```{r Segmented Regesion}
+library(segmented)
+df$date_numeric <- as.numeric(df$date)
+# Define the intervention date
+intervention_date <- as.Date("2005-10-01")
+df$intervention <-ifelse(df$date >= intervention_date, 1, 0)
+df$time_since_intervention <- ifelse(df$date >= intervention_date, df$date_numeric - min(df$date_numeric[df$date >= intervention_date]), 0)
+
+# Fit a segmented regression model
+seg_model <- lm(hom_rate ~ date_numeric + intervention + time_since_intervention, data = df)
+summary(seg_model)
+
+```
+
+```{r}
+df$segmented_fit <- predict(seg_model, newdata = df)
+```
+
+#### ARIMA model
+
+```{r ARIMA model}
+install.packages("forecast",repos = 'https://cran.ms.unimelb.edu.au/')
+library(forecast)
+```
+
+```{r}
+# Fit ARIMA model to the data before intervention
+pre_intervention_data <- subset(df, date < intervention_date)
+arima_model <- auto.arima(pre_intervention_data$hom_rate)
+# Fit ARIMA model with intervention variable
+arima_with_intervention <- Arima(df$hom_rate, order = arimaorder(arima_model), xreg = df$intervention)
+summary(arima_with_intervention)
+```
+
+```{r}
+# Check residuals of the ARIMA model
+checkresiduals(arima_with_intervention)
+
+```
+- The top graph: In this graph, the residuals do not exhibit obvious trends or strong patterns, suggesting that the model's errors are relatively random which is a good sign for model validity. 
+- The ACF graph: It is easy to see that most of the auto correlations fall within the confidence range, indicating that there is minimal autocorrelation in the residuals. There are 2 spikes that exceed the range. Generally, the model capture the structure of data quite reasonably. If these spikes were numerous, it would suggest that the model might not good enough to capture all patterns of the data.
+- The histogram appear approximately normal distribution. The is a light skew from perfect normality, as indicated by the asymmetry or minor deviations from the bell curve shape.
+
+
+```{r}
+df$arima_fit <- fitted(arima_with_intervention)
+```
+
+#### Compare models
+
+```{r}
+# Plot observed data and fitted values for both models
+ggplot(df, aes(x = date)) +
+  geom_line(aes(y = hom_rate, color = "Observed"), size = 1) +
+  geom_line(aes( y = segmented_fit, color = "Segmented Regession Fit"), size = 1, linetype = "dashed") +
+  geom_line(aes(y = arima_fit, color = "ARIMA Fit"), size = 1, linetype = "dotted") + 
+  labs(title = "Comparison of Sengmented Regession and ARIMA Models",
+       x = "Date", y = "Homicide Rate",
+       color = "Legend") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+```{r}
+AIC(seg_model, arima_with_intervention)
+BIC(seg_model, arima_with_intervention)
+
+```
+
+### Question 4
+
+Using the "best" model from question (3), summaries your findings and write a conclusion describing the impact of the law on the homicide rate in Florida. Provide effect estimates and relevant statistics to support your answer.
+
+When we look at the graph comparison of Segmented Regression and ARIMA model plus the AIC values (the BIC values between 2 models are not much different), the Segmented Regression model is slightly better than ARIMA model.By looking at the graph, we can see that Segmented Regression model gives the upward trend from 2006 which is matched to the observed line while the ARIMA is plateaued. I will detail the summary of Segmented Regression model as below: - Intercept: The estimate for the intercept (0.6144) represents the expected homicide rate when all predictors variables are zero. The associated p-value (6.87e-05) suggests this coefficient is highly statistically significant. - date_numeric: the coefficient is very small (-1.0542-05) with a large p-value (0.39303) indicating that changes over time. It mean not statistically significant effect. - intervention: the coefficient (0.0423) for the intervention variable suggests a slightly increase in the homicide rate immediately following the intervention. However the p-value implying that this change is not statistically significant. - time_since_intervention: the coefficient suggests that for each unit increase in time since the intervention, there is a mild upward trend in the homicide rate. The p value shows that this effect is statistically significant at 1% level which means there is a notable effect overtime after the intervention. - R2 values is around 32% of the variance in the homicide rate is explained by the model. The adjusted R2 is slightly lower which mean if we add more predictors into the model, it would not improve the fit. -F-statistic and p-value suggests that the model is generally statistically significant, meaning that at least one of the predictors has a significant impact on the homicide rate.
+
+In conclusion, the 'time_since_intervention' has a significant positive association with the homicide rate over time while 'intervention' and 'date_numeric' show no statistically significant.
+
+Regarding to the result of analysis above, the stand-your-ground law in Florida did not show a statistically significant immediate change in the homicide rate upon its enactment. However, when we see the graph, the law was associated with a moderate increase in the homicide rate over time. This long-term upward trend suggests that the law may have contributed to environment with elevated risk of homicides.
+
+### Question 5
+
+Including a negative control series is one way of improving causal inference from interrupted time series analysis. Give one example of a negative control series for this intervention (be specific), and justify your selection. Explain in your own words how a negative control series helps with inference.
+
+Interrupted time series design is the strongest, quasi-experimental approach for evaluating longitudinal effect of interventions(paper "Segmented regression analysis of ITS studies in medical use research. However, the resulting estimates of intervention impact can be severely biased if the underlying trends are not adequately accounted for. Control series offer a potential solution to this problem, the control series should share the same confounders as the intervention series an be unaffected by the intervention(in the paper "Analyzing Interrupted Time Series with Control").
+
+For this question base on the stand-your-ground law in Florida, the negative control series for evaluating the impact of the law on homicide rates in Florida could be non-violate crime rates such as theft, fraud or drug-related crimes in Florida over the same time period. The reason for choosing non-violent crime rate is that the stand-your-ground law is primarily pertain to the use of lethal force in self-defense situations which involving interpersonal violence, and the non-violent crime rates opposites to this so it is unlikely to be directly affected by this law. If the observed trend in non-violent crimes remains stable, it provides evidence that any change in the homicide rate is more likely attributable to the intervention rather than other broader societal factors that may influence crime in general.
+
+Negative control series helps improve causal inference by serving a baseline or reference point that is not expected to be affected by the intervention. It acts as a counter factual to strengthen the causal claim that changes observed in the primary outcome. In other words, it would help to rule out confounders. If the primary series and the negative control series share a similar pattern of change after the intervention, it suggests that external factors may be responsible for the observed trend. If only the primary shows a significant change post-intervention while the negative control remains stable, this strengthens the argument that the intervention has a specific effect on the primary outcome. In conclusion, a negative control series gives us a way to distinguish between changes caused by intervention and those different factors, improving the robustness and validity of causal claims in ITSA.
+
+The segmented regression model and the control trend model can both be used to adjust for confounding; however, the latter is potentially more convincing between two models, but only if the control has a strong justification and is statistically consistent with the model. If in studies where no negative control is available or where the quality of negative control is in doubt, the segmented regression model may provide a useful alternative. (paper "Analyzing Interrupted Time Series with a Control) 
+
