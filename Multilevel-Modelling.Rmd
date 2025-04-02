@@ -1,0 +1,468 @@
+---
+title: "HDAT9700: Assessment 2 - Chapters 3-5"
+subtitle: "Multilevel modelling"
+author: "Maggie Burmeister"
+date: "12/10/2024"
+output: 
+  html_document:
+    highlight: tango
+    df_print: paged
+    toc: true
+    toc_float: true
+    number_sections: true
+    fig_width: 14
+    fig_height: 24
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Load data
+load('hospSatisfaction.Rda')
+
+# Load libraries
+
+```
+
+## Student declaration
+
+***Instructions: Indicate that you understand and agree with the following three statements by typing an x in the square brackets below, e.g. [x].***
+
+I declare that this assessment item is my own work, except where acknowledged, and has not been submitted for academic credit elsewhere or previously, or produced independently of this course (e.g. for a third party such as your place of employment) and acknowledge that the assessor of this item may, for the purpose of assessing this item: (i) Reproduce this assessment item and provide a copy to another member of the University; and/or (ii) Communicate a copy of this assessment item to a plagiarism checking service (which may then retain a copy of the assessment item on its database for the purpose of future plagiarism checking).
+
+-   [x] I understand and agree
+
+I certify that I have read and understood the University Rules in respect of Student Academic Misconduct.
+
+-   [x] I understand and agree
+
+I have a backup copy of the assessment.
+
+-   [x] I understand and agree
+
+## Statement on the use of generative AI
+
+***Instructions: If you have used Generative AI tools (e.g. ChatGPT, copilot, etc) to help complete this assessment, please state the details here. Your statement should include (i) the name of tool used; (ii) sections or questions that were answered with the help of generative AI; (iii) How generative AI was used. For example you might write "I used Microsoft Copilot to generate template R code for questions 1 and 2, and to help draft my written response to question 4." If you have not used Generative AI to help complete your assessment, please state this.***
+
+I used ChatGPT to generate template R code for question 2 in section 2. The rest of the assignment I read lecture notes, practical, ideas from HDAT 9600 and 9800 for visualization.
+
+# Section 1
+
+## Question 1: What is the hierarchical data structure for this analysis?
+
+The hierarchical data structure for this analysis on this paper, I think there is two levels of hierarchy. Patient level: from the paper, we can see that they collected patient data including demographic characteristics (sex, age, education, and annual family income), clinical characteristic (cancer type, cancer stage, self-reported health status, and length of stay), satisfaction score across various aspects of health. At hospital level,data was collected based on five aspects: administrative process, hospital environment, medical care, symptom management and overall satisfaction, these information allow for the exploration of how hospital-level factors affect patient satisfaction outcome across hospitals.
+
+## Question 2: With reference to appropriate Figure(s) or Table(s), discuss whether the national-level hospitals are performing better or worse compared to provincial-level hospitals for the five satisfaction measures, having accounted for case-mix.
+
+The effect of mix-case adjustment reveals that national level hospitals are performing better than provincial level hospitals in general across five satisfaction measures: administrative process, hospital environment, medical care, symptom management, and overall satisfaction. Based on Figure 2 (caterpillar plots) we can analyse five measurements: 
+1. Medical care: for medical care, national level hospitals scored higher in patient satisfaction. 
+2. Administrative Process: both national and provincial hospitals showed lower satisfaction in the administrative process even after the adjustment. However, national-level hospital still manage this measure better than provincial hospitals. 
+3.Hospital Environment: for this measure, only 11 hospitals above O for satisfaction from patients. National-level hospitals are still performing better than provincial hospitals. 
+4.Symptom Management: this aspect received lower scores overall with a more significant performance gap between national and provincial hospitals. 
+5. Overall Satisfaction: National-level hospitals also perform well in this aspect which reflect higher patient satisfaction across multiple facets of care.
+
+# Section 2
+
+## Question 1: EDA dataset
+
+### Load necessary libraries
+
+```{r}
+#| label: install_load_package
+#| output: false
+if (!requireNamespace("tidyverse", quietly = TRUE)) install.packages("tidyverse")
+if (!requireNamespace("Hmisc", quietly = TRUE)) install.packages("Hmisc")
+library(dplyr)
+library(Hmisc)
+```
+
+```{r}
+# Load data
+load('hospSatisfaction.Rda')
+head(hospSatisfaction)
+
+```
+
+```{r}
+
+summary(hospSatisfaction)
+```
+
+```{r}
+
+summarise_raw_data_hosp <- hospSatisfaction %>%
+  describe()
+
+```
+
+```{r}
+summarise_raw_data_hosp
+
+```
+
+```{r}
+# Summary stats from numerical variables
+summary(hospSatisfaction[,c("age", "los", "satisfaction")])
+
+```
+
+```{r}
+# Load the ggplot2 package
+suppressPackageStartupMessages(library(ggplot2))
+```
+
+### Distributions for Num variables
+
+```{r}
+# Age distribution
+ggplot(hospSatisfaction, aes(x=age))+
+  geom_histogram(binwidth = 5, fill = "skyblue", color = "black")+
+  ggtitle("Age Distribution") +
+  theme_minimal()
+
+# Length of Stay Distribution
+ggplot(hospSatisfaction, aes(x=los))+
+  geom_histogram(binwidth = 3, fill = "lightgreen", color = "black")+
+  ggtitle("Length of Stay Distribution") +
+  theme_minimal()
+
+# Satisfaction Score Distribution
+ggplot(hospSatisfaction, aes(x=satisfaction))+
+  geom_histogram(binwidth = 5, fill = "lightcoral", color = "black")+
+  ggtitle("Satisfaction Score Distribution") +
+  theme_minimal()
+
+```
+
+By the look through three graphs above, we can see age has skewed left distribution, LOS has skewed right distribution. Only satisfaction score has pretty normal distribution.
+
+### Boxplot for Num variables
+
+```{r}
+# Age boxplot
+ggplot(hospSatisfaction, aes(x=age))+
+  geom_boxplot(fill = "skyblue")+
+  ggtitle("Age Boxplot") +
+  theme_minimal()
+
+# Length of Stay boxplot
+ggplot(hospSatisfaction, aes(x=los))+
+  geom_boxplot(fill = "lightgreen")+
+  ggtitle("Length of Stay Boxplot") +
+  theme_minimal()
+
+# Satisfaction Score boxplot
+ggplot(hospSatisfaction, aes(x=satisfaction))+
+  geom_boxplot(fill = "lightcoral")+
+  ggtitle("Satisfaction Score Boxplot") +
+  theme_minimal()
+```
+
+For the Age boxplot, we can see most of patients are between 65-80 years old. Median age is around 70 and the outliers show a few younger patients below 40.
+
+In term of Length of stay, the majority of patients stay in the hospital for short period (2-5 days), with a few patients having longer stays of over 10 days (outliers).
+
+Regarding to satisfaction scores, they are clustered around the middle with a median score of 50, but there are some patients who rated their satisfaction much higher (outliers). It means that the general satisfaction is around 50, however, there are a few patients were much more satisfied than the others.
+
+### Distribution for Cat varibales
+
+```{r}
+# Hospital Type Distribution
+ggplot(hospSatisfaction, aes(x = status, fill = status))+
+  geom_bar()+
+  ggtitle("Hospital Type (Public vs Private)") +
+  theme_minimal()+
+  scale_fill_manual(values = c("skyblue", "coral"))
+
+# Hospital Area Distribution
+ggplot(hospSatisfaction, aes(x = area, fill = area))+
+  geom_bar()+
+  ggtitle("Hospital Area (Remote, Regional, Urban)") +
+  theme_minimal()+
+  scale_fill_manual(values = c("lightgreen", "gold", "lightblue"))
+
+# Patient Gender Distribution 
+ggplot(hospSatisfaction, aes(x = sex, fill = sex))+
+  geom_bar()+
+  ggtitle("Patient Gender (Male vs Female)") +
+  theme_minimal()+
+  scale_fill_manual(values = c("lightcoral", "lightblue"))
+```
+
+From the hospital type distribution, we easily see that the public is more than triple to the private ones. This distribution shows that there are far more public hospitals than private ones, indicating that public healthcare institutions are the primary providers of healthcare services.
+
+Regarding to hospital area, the majority hospital located in urban area, in regional, around 2,800 and under 1,000 hospitals in remote areas. This suggest that accessing to healthcare is more concentrated in urban regions.
+
+In term of patient gender, there is no difference between male and female patients.
+
+## Question 2: Fit a series of multilevel models and select the best-fitting model for the data
+
+```{r}
+#| label: install_load_package_1
+#| output: false
+if (!requireNamespace("lme4", quietly = TRUE)) install.packages("lme4")
+if (!requireNamespace("nlme", quietly = TRUE)) install.packages("nlme")
+if (!requireNamespace("broom.mixed", quietly = TRUE)) install.packages("broom.mixed") # for cleaning model outputs
+
+# Load the libraries
+library(lme4)
+library(nlme)
+library(broom.mixed)
+```
+
+### Model 1 (Empty/Null model)
+
+```{r}
+#Null model (no predictors, just random effect for hospital)
+model_1 <- lmer(satisfaction ~ (1 | id), data = hospSatisfaction)
+# Summarize the model
+summary(model_1)
+
+```
+
+```{r}
+#nlme 
+model_11 <- lme(fixed = satisfaction ~ 1, random = ~ 1| id, data = hospSatisfaction)
+
+summary(model_11)
+
+```
+
+### Model 2 (adding patient-level predictors)
+
+```{r}
+# Model with patient-level predictors (lme4)
+model_2 <- lmer(satisfaction ~ sex + age + los + readmission + (1 | id), data = hospSatisfaction)
+summary(model_2)
+
+```
+
+```{r}
+#nlme
+model_22 <- lme(fixed = satisfaction ~ sex + age + los + readmission, random = ~ 1| id, data = hospSatisfaction)
+summary((model_22))
+```
+
+### Model 3 (adding hospital-level predictors)
+
+```{r}
+# lme4
+model_3 <- lmer(satisfaction ~ sex + age + los + readmission + status + area + (1 | id), data = hospSatisfaction)
+summary(model_3)
+```
+
+```{r}
+# nlme
+model_33 <- lme(fixed = satisfaction ~ sex + age + los + readmission + status + area, random = ~ 1| id, data = hospSatisfaction)
+
+summary(model_33)
+```
+
+### Model 4 (Random slopes model)
+
+```{r}
+#lme4
+model_4 <- lmer(satisfaction ~ sex + age + los + readmission + status + area + (los | id), data = hospSatisfaction)
+summary(model_4)
+```
+
+```{r}
+#nlme
+model_44 <- lme(fixed = satisfaction ~ sex + age + los + readmission + status + area, random = ~ los | id, data = hospSatisfaction)
+
+summary(model_44)
+```
+
+### Compare models
+
+```{r}
+# compare models using AIC
+AIC(model_1, model_2, model_3, model_4)
+# compare models using BIC
+BIC(model_1, model_2, model_3, model_4)
+
+```
+
+```{r}
+# compare models using AIC
+AIC(model_11, model_22, model_33, model_44)
+# compare models using BIC
+BIC(model_11, model_22, model_33, model_44)
+```
+
+Base on the AIC and BIC for the list of models above, I will choose the model 3 (or model 33 for nlme package). Because it has the lowest AIC and BIC compare to other models.
+
+There are a few different between 'lme4' and 'nlme' package, so for this question, I tried both to see which model I will choose, but the result is similar which is model_3 (lme4) or model_33 (nlme).
+
+```{r}
+confint(model_3)
+```
+
+Random intercept variance (sig01) represents the variance between hospitals, the confidence interval indicate that the variance between 3.01 and 4.71, it could have some variability in satisfaction across hospitals. Residual variance (sigma) represents the within-hospital variance in satisfaction, or variability in patient satisfaction. The confidence interval indicates that the residual consistent amount of unexplained variability within hospitals. Summary fixed effect: - Gender (M): Males are less satisfied than females, because it has negative intervals. - Age: Older patients tend to be slightly more satisfied. - Readdmision: patients who were readmitted are more satisfied than those were not. - Patient in public hospitals are less satisfied than those in private hospitals due to negative intervals. - Area: patients in remote area are more satisfied than those in regional hospitals, while the difference between urbane and regional hospitals is not significant. - LOS: on the this measure is not statistically significant in the table above.
+
+```{r}
+intervals(model_33)
+```
+
+## Question 3: For your chosen model, check the model validity and communicate the model results using appropriate visualisations
+
+```{r}
+if (!requireNamespace("sjPlot", quietly = TRUE)) install.packages("sjPlot")
+library(sjPlot)
+```
+
+### Check model validity
+
+#### Residual Diagnostic
+
+```{r}
+# Residual vs Fitted values plot
+residuals <- resid(model_3)
+fitted_values <- fitted(model_3)
+
+ggplot(data = NULL, aes(x = fitted_values, y = residuals)) + 
+  geom_point()+
+  geom_smooth(method = "loess", color = "skyblue") + 
+  labs(title = "Residuals vs Fitted", x = "Fitted Values", y = "Residuals")
+
+# QQ plot for normality of residuals
+qqnorm(residuals)
+qqline(residuals, col = "red")
+```
+
+The residuals vs fitted and the qq plot above show that the residuals are normally distributed with fairly constant variance, even though there is a slight nonlinearity. In general, the model's assumptions are largely met with no major violations.
+
+#### Random Effect Diagnostic
+
+```{r}
+# Extract and plot random effects 
+ranef_values <- ranef(model_3)$id
+
+# Plot random effects
+ggplot(data = NULL, aes(x = ranef_values[,1])) +
+  geom_histogram(binwidth = 0.5, fill = "skyblue", color = "black")+
+  labs(title = "Random Effects Distribution", x = "Random Intercept for Hospitals", y = "Count")
+
+```
+
+The random effects distribution shows that many hospitals are clustered around the overall average satisfaction score (0). However, there are a few hospitals have extreme random effect (way above 5) means they have much higher satisfaction scores than the average and some hospitals have low random effects (below -5) indicating that they have much lower satisfaction score than the average.
+
+#### Linearity
+
+```{r}
+# Partial residual plot for one of the key predictors (status)
+plot_model(model_3, type = "pred", terms = "status")
+```
+
+By looking at the graph above, we easily to see that private hospitals have significantly higher predicted patient satisfaction compared to public ones.
+
+### Model results using visualizations
+
+#### Fixed Effects Coefficients
+
+```{r}
+# Plot fixed effects (coefficients)
+plot_model(model_3, type = "est", show.values = TRUE, value.offset = .3) +
+  labs(title = "Fixed Effects Estimates", x = "Predictors", y = "Estimate")
+```
+
+Looking at the fixed effects estimates plot above, we can see that only LOS and Urban is not statistically significant (there is no stars next to the figure) while the rest are statistically significant. Fixed effects estimates for Age readmission and area(remote) indicate that patient have higher satisfaction (Older have higher satisfaction than younger ones, readdmission patients have higher satisfaction than those who were not readmiited, patients in remote hospitals report significantly higher satisfaction compared to those in regional hospitals). In term of lower satisfaction, patients in public hospitals are predicted to have the most significant lower satisfaction score compared to patients in private hospitals. Next measure is sex, male patients are predicted to have lower satisfaction score than female patients.
+
+#### Random Effect Plot
+
+```{r}
+# Random effects for hospitals
+plot_model(model_3, type = "re", show.values = TRUE) +
+  labs(title = "Random Effects by Hospital", x = "Hospital ID", y = "Estimate")
+```
+
+```{r}
+# Convert to a data frame for plotting
+ranef_df <- as.data.frame(ranef_values)
+ranef_df$Hospital_ID <- rownames(ranef_df)
+
+ggplot(ranef_df, aes(x = `(Intercept)`, y = Hospital_ID)) +
+  geom_point() + 
+  geom_text(aes(label = round(`(Intercept)`, 2)), color = "blue", size = 5, hjust = -0.5) +
+  labs(title = "Random Effects by Hospital", x = "Estimate", y = "Hospital ID") + 
+  theme_minimal() +
+  theme(
+    axis.text.y = element_text(size = 12),
+    axis.text.x = element_text(size = 12),
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.title = element_text(size = 14)
+  )
+  
+```
+
+With those 2 plot of random effects by hospital above, there is a wide range of random intercepts across hospitals, indicate that satisfaction varies between hospitals considerably. Some perform much better than average, while others perform worse.
+
+#### Predicted vs observed values
+
+```{r}
+# Predicted vs Observed plot
+predicted_values <- predict(model_3)
+observed_values <- hospSatisfaction$satisfaction
+
+ggplot(data = NULL, aes(x = predicted_values, y = observed_values)) +
+  geom_point(color = "skyblue") +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "lightcoral") +
+  labs(title = "Predicted vs Observed Satisfaction", x = "Predicted Values", y = "Observed Values")
+```
+
+The plot above reveals that the model is reasonably accurate. Most of the dots are clustered around the identity line. Except some points at extremes, the model captures quite well the general trend of the data.
+
+## Question 4: For your chosen model, provide a written interpretation of all of the model parameters
+
+```{r}
+tidy(model_3)
+
+```
+### Chosen Model: Model 3
+
+Linear mixed model fit by REML ['lmerMod']
+Formula: satisfaction ~ sex + age + los + readmission + status + area +      (1 | id)
+   Data: hospSatisfaction
+
+REML criterion at convergence: 49003.4
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.9005 -0.6779  0.0191  0.6795  3.6670 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ id       (Intercept) 15.3     3.912   
+ Residual             33.5     5.788   
+Number of obs: 7690, groups:  id, 40
+
+Fixed effects:
+                 Estimate Std. Error t value
+(Intercept)     39.523083   1.850517  21.358
+sexM            -7.220641   0.132513 -54.490
+age              0.340447   0.005753  59.176
+los             -0.007676   0.024659  -0.311
+readmissionYes   5.435602   0.153732  35.358
+statuspublic   -13.757724   1.531672  -8.982
+arearemote      18.657389   1.674422  11.143
+areaurban       -1.956085   1.516728  -1.290
+
+Correlation of Fixed Effects:
+            (Intr) sexM   age    los    rdmssY sttspb arermt
+sexM        -0.033                                          
+age         -0.209 -0.022                                   
+los         -0.006  0.011 -0.210                            
+readmissnYs -0.018 -0.005 -0.014  0.006                     
+statuspublic-0.759  0.001  0.002 -0.002  0.000              
+arearemote  -0.548 -0.002  0.001 -0.002  0.002  0.174       
+areaurban   -0.620  0.002  0.000 -0.001  0.001  0.212  0.544
+
+
+With the result of model 3 above, a short interpretation of all the model parameters will follow:
+
+- Scaled residuals range from -3.90 to 3.67 indicates the model's prediction accuracy.
+- Random Effect: there is unexplained variance in satisfaction is still present, though less than the residual variation.
+- Fixed effects: by the look, we can easily see that only LOS has non-significant effect on satisfaction. Statuspublic, sexM and areaurban have lower satisfaction (negative number)  while arearemote, readmission and age have higher predicted satisfaction (positive number).
+- Correlation of Fixed Effects: it is a potential multicollinearity between statuspublic and arearemote as they have moderate correlation which indicating some relationhsip in satisfaction between patients in public and remote settings.
+
+In summary, sex, age, readmission status, status (public/private), and remote area are significant predictors which play meaningful role to impact satisfaction in patients. 
