@@ -1,0 +1,251 @@
+---
+title: "HDAT9700: Assessment 1 - Chapters 1-2"
+subtitle: "Addressing causal questions with observational data"
+author: "Maggie Burmeister"
+date: "25/09/2024"
+output: github_document
+---
+
+!--- title: "HDAT9700: Assessment 1 - Chapters 1-2" subtitle: "Addressing causal questions with observational data" author: "Name" date: "Date" output: github_document ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE) # global chunk options here
+```
+
+## Student declaration
+
+***Instructions: Indicate that you understand and agree with the following three statements by typing an x in the square brackets below, e.g. \[x\].***
+
+I declare that this assessment item is my own work, except where acknowledged, and has not been submitted for academic credit elsewhere or previously, or produced independently of this course (e.g. for a third party such as your place of employment) and acknowledge that the assessor of this item may, for the purpose of assessing this item: (i) Reproduce this assessment item and provide a copy to another member of the University; and/or (ii) Communicate a copy of this assessment item to a plagiarism checking service (which may then retain a copy of the assessment item on its database for the purpose of future plagiarism checking).
+
+-   [x] I understand and agree
+
+I certify that I have read and understood the University Rules in respect of Student Academic Misconduct.
+
+-   [x] I understand and agree
+
+I have a backup copy of the assessment.
+
+-   [x] I understand and agree
+
+## Statement on the use of generative AI
+
+***Instructions: If you have used Generative AI tools (e.g. ChatGPT, copilot, etc) to help complete this assessment, please state the details here. Your statement should include (i) the name of tool used; (ii) sections or questions that were answered with the help of generative AI; (iii) How generative AI was used. For example you might write "I used Microsoft Copilot to generate template R code for questions 1 and 2, and to help draft my written response to question 4." If you have not used Generative AI to help complete your assessment, please state this.***
+
+# Section 1
+
+## Question 1: DAG (Used Gen AI to list out all possible variables, and from there I can choose the ones I think it is important)
+
+```{r}
+library(dagitty)
+library(ggdag)
+library(ggplot2)
+```
+
+```{r}
+# Define the DAG using dagitty syntax
+dag <- dagitty('dag {
+   "FNP_Participation" -> "Preterm_Birth"
+   "Preterm_Birth" -> "Low_Birth_Weight"
+   "FNP_Participation" -> "Healthcare_Utilization"
+   "Healthcare_Utilization" -> "Maternal_Health"
+   "Maternal_Health" -> "Low_Birth_Weight"
+   "Maternal_Health" -> "Smoking_Status"
+   "Smoking_Status" -> "Low_Birth_Weight"
+   "Maternal_Age" -> "Low_Birth_Weight"
+   "Maternal_Age" -> "Maternal_Health"
+   "Maternal_Age" -> "FNP_Participation"
+   "Maternal_SES" -> "Low_Birth_Weight"
+   "Maternal_SES" -> "FNP_Participation"
+               }')
+
+# Plot the DAG
+ggdag(dag, layout = "circle") +
+  theme_dag() +
+  ggtitle ("DAG: FNP Participation and Birth Outcome") +
+  theme(
+    plot.title = element_text(size = 15, face = "bold"),
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks = element_blank()
+  ) +
+  geom_dag_node( size = 20, color = "lightgreen") +
+  geom_dag_text(aes(label = name), size = 3, color = "black")
+  
+
+
+```
+
+To drawing the DAG for estimating the total and direct effect of Family Nurse Partnership (FNP) participation on aiming to improve the birth outcomes, after reading the paper, I think the key variables are below: 1. Exposure (E): FNP Participation 2. Birth Outcome (O): Low birth weight 3. Maternal Socioeconomic Status (SES): affects both participation and birth outcomes. 4. Maternal Age: Affects participation and birth outcome, because the paper is more focus on adolescent mothers. 5. Maternal Health: Affects both birth outcomes and FNP participation 6. Preterm Birth: A linking variable that influences low birth weight. 7. Smoking Status (SM): affect birth weight and is influenced by maternal health 8. Healthcare Utilization (HU): Affects maternal health and is influences by FNP participation.
+
+The causal pathway will be: - FNP participation -\> Preterm Birth -\> Low Birth Weight - Confounders such as Maternal SES, Maternal Health, Maternal Age and Smoking Status would affect both the exposure and the outcome.
+
+## Question 2: Non-causal/ Backdoor path(s)
+
+-   Maternal SES -\> affects both FNP participation and birth weight outcomes so it creates a non-causal path. To block this backdoor path, this variable should be adjusted in the analysis.
+-   Maternal Health and Maternal Age are also the confounders need to be controlled as they both influence FNP participation and the likelihood of low birth weight.
+
+Generally, Maternal SES, Maternal Health and Maternal Age need to be controlled to block the backdoor paths and ensure the analysis captures the true causal effect of FNP on birth outcome.
+
+## Question 3: Propensity Score Distribution (Get information from the paper, lecture notes, and Causal3900.github.io)
+
+The paper mentions that the median propensity score for mothers in the FNP program was higher than non-FNP mothers (0.39 vs 0.31), meaning that FNP mothers had more risk factors for adverse outcomes in general. However, the overlap between the propensity scores of the two groups was good, suggesting that the assumption of positivity was likely met. This means that there was enough overlap between the characteristics of FNP mothers and non-FNP mothers to allow for meaningful comparisons through propensity score matching. In summary, the distribution supports the assumption of positivity because mothers in both groups (treated and untreated) had a range of propensity scores that overlapped, making comparisons viable across similar individuals.
+
+![Overlapped Propensity Scores](C:/Users/maggi/OneDrive/Documents/GitHub/assessment-1-causal-inference-with-observational-data-Maggie1910\Overlapped%20propensity%20scores.png)
+
+# Section 2
+
+## Question 1: EDA the dataset
+
+```{r}
+load('fnp-data.Rda')
+head(df)
+```
+
+```{r}
+if (!requireNamespace("tidyverse", quietly = TRUE)) install.packages("tidyverse")
+if (!requireNamespace("Hmisc", quietly = TRUE)) install.packages("Hmisc")
+library(dplyr)
+library(Hmisc)
+```
+
+### Summary statistics for all variables
+
+```{r}
+summary(df)
+```
+
+```{r}
+#| label: summarise_raw_data
+
+summarise_raw_data <- df %>%
+  describe()
+```
+
+```{r}
+#| label: preview_summarise_data
+summarise_raw_data 
+
+```
+
+Summary Statistics: The data set consists 6 variables related to FNP participation: maternal age, ethnicity, area deprivation, birth weight, and development vulnerability, and 11,174 observations. There is no missing values.
+
+### Table for FNP participation
+
+```{r}
+table(df$fnp)
+```
+
+We can see the above data for FNP participation, among the cohort, only 1,787 is FNP mothers, and 9,387 is non-FNP mothers.
+
+### Check structure of dataframe
+
+```{r}
+str(df)
+```
+
+### Distribution of birthweight
+
+```{r}
+hist(df$bweight, main = "Distribution of Birthweight", xlab = "Birthweight (grams)", col = "lightblue" )
+```
+
+The histogram shows that birth weights are mostly centered around the average range, with a slightly noticeable portion below 2,500g.
+
+### Proportion of low birthweight babies (\<2,500g)
+
+```{r}
+df$low_birthweight <- ifelse(df$bweight <2500, 1, 0)
+table(df$low_birthweight)
+```
+
+Regarding table above, out of 11,174 babies, there are 162 babies under 2,500g (low birthweight). 11,012 babies have birthweights above or equal to 2,500g. \### Maternal age distribution
+
+```{r}
+hist(df$mat_age, main = "Distribution of Maternal Age", xlab = "Age", col = "lightgreen")
+```
+
+The histogram above shows that most mothers are in their late teens or early 20s.
+
+### Association between FNP participation and low birthweight
+
+```{r}
+table(df$fnp, df$low_birthweight)
+```
+
+From the table above, we can see that it seems higher proportion of low birthweight in FNP mothers because it's only 1.15% of babies are born with low birthweight among non-FNP mothers, while it's 3.02% of babies are born with low birthweight among FNP mothers.
+
+### Association between deprivation and low birthweight
+
+```{r}
+boxplot(df$bweight ~ df$deprivation, main = "Birthweight by Depriviation", xlab = "Depriviation Level", ylab = "Birthweight (grams)")
+```
+
+We can see on the boxplot above, as the deprivation level increase, there shows to be slight decrease in median birthweight, which means it may appear negative assiciation between deprivation and birthweight (higher deprivation is associated with lower birthweight on average).
+
+## Question 2: Matching to evaluate the effect on Low birthweight (Reference on lecture notes and Causal3900.github.io)
+
+```{r}
+#| label: install_load_package
+#| output: false
+if (!requireNamespace("MatchIt", quietly = TRUE)) install.packages("MatchIt")
+library(MatchIt)
+```
+
+```{r}
+# Define low birthweight as the outcome
+df$low_birthweight <- ifelse(df$bweight <2500, 1, 0)
+
+# Propensity score matching on FNP mothers
+matchit_model <- matchit(fnp ~ mat_age + deprivation + ethnicity, data = df, method = "nearest", ratio = 1)
+
+# Summary of the matching process
+summary(matchit_model)
+
+# Create matched dataset
+matched_data <- match.data(matchit_model)
+
+```
+
+We can see there is a significant difference of eCDF Mean and eCDF Max between the raw data and matched data. In the matched data, eCDF Mean and eCDF Max are much smaller compare to matched data. eCDF Mean and eCDF Max represent measures of imbalance based on the empirical cumulative distribution functions, the higher values, the more imbalance dataset.
+
+In the samples sizes table, we can see there are 7,600 unmatched control individuals, which were not used in the analysis after matching.
+
+In short, before matching, there were significant imbalances (e.g., large standardized mean differences), but after matching, these differences have been reduced, making the treated and control groups more comparable.
+
+## Question 3: Summarising Balance Before and After Matching
+
+```{r}
+# Before matching balance
+summary(df[, c("fnp", "mat_age", "deprivation", "ethnicity","low_birthweight")])
+
+# After matching balance
+summary(matched_data[,c("fnp", "mat_age", "deprivation", "ethnicity","low_birthweight")])
+
+# Checking covariate balance with plots
+plot(summary(matchit_model))
+
+```
+
+Before matching, there is an imbalance in maternal age, deprivation, and ethnicity between FNP and non-FNP mothers. After matching, the covariates are more balanced between the groups, reducing bias while doing analysis. When we look into the graph, it is obvious that there is an improvement in balance of covariates between treated and control group. Initially, there was a significant imbalance for variables like distance, mat_age, and deprivation. However, after matching, all covariates have ASMD values below the threshold which means that the treated and control groups are now more comparable.
+
+## Question 4: Linear Model to estimate effect (Reference from lecture notes and HDAT 9600)
+
+```{r}
+# Linear model on raw data
+raw_model <- glm(low_birthweight ~ fnp + mat_age + deprivation + ethnicity, data = df, family = "binomial")
+summary(raw_model)
+
+# Linear model on matched data
+matched_model <- glm(low_birthweight ~ fnp + mat_age + deprivation + ethnicity, data = matched_data, family = "binomial")
+summary(matched_model)
+```
+
+In the model 1 (Logistic Regression on the original data), base on the p-values, variables are highly significant are mat_age, deprivation, ethnicity South Asian. However, in the model 2 (Logistic Regression on the matched data), the highly significant variables down to 2 which are mat_age and deprivation. Variable ethnicity South Asian is significant.
+
+Regarding to model fit, it is obvious that Model 2 is better fit after matching due to AIC ratio, the first one is 1393.4 and the 2nd is 982.11.
+
+## Question 5: Positivity and Consistenct Assumptions (Reference from Causal3900.github.io)
+
+-   Positivity: The interpretation of the positivity assumption is that there must be a non-zero probability of having treated and untreated individuals across all strata defined by the confounders.( From "Consistency, conditional exchangeability and positivity in hypothetical weight change interventions "). In this case, since there is a good overlap between FNP and non-FNP participants across covariates after matching, the positivity assumption can happen.
+-   Consistency: The observed outcome equals the potential outcome that corresponds to given treatment. The matched groups have similar covariate distributions, it is assumed that the treatment effect on FNP mothers on birthweight is consistent across matched data. However, the possibility of unmeasured confoundinh could challenge this assumption.

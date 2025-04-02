@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Maggie Burmeister">
+<meta name="dcterms.date" content="2026-01-09">
+
+<title>HDAT9700: Assessment 1 - Chapters 1-2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="submission_files/libs/clipboard/clipboard.min.js"></script>
+<script src="submission_files/libs/quarto-html/quarto.js"></script>
+<script src="submission_files/libs/quarto-html/popper.min.js"></script>
+<script src="submission_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="submission_files/libs/quarto-html/anchor.min.js"></script>
+<link href="submission_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="submission_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="submission_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="submission_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="submission_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">HDAT9700: Assessment 1 - Chapters 1-2</h1>
+<p class="subtitle lead">Addressing causal questions with observational data</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Maggie Burmeister </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 9, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>!— title: “HDAT9700: Assessment 1 - Chapters 1-2” subtitle: “Addressing causal questions with observational data” author: “Name” date: “Date” output: github_document —</p>
+<section id="student-declaration" class="level2">
+<h2 class="anchored" data-anchor-id="student-declaration">Student declaration</h2>
+<p><strong><em>Instructions: Indicate that you understand and agree with the following three statements by typing an x in the square brackets below, e.g.&nbsp;[x].</em></strong></p>
+<p>I declare that this assessment item is my own work, except where acknowledged, and has not been submitted for academic credit elsewhere or previously, or produced independently of this course (e.g.&nbsp;for a third party such as your place of employment) and acknowledge that the assessor of this item may, for the purpose of assessing this item: (i) Reproduce this assessment item and provide a copy to another member of the University; and/or (ii) Communicate a copy of this assessment item to a plagiarism checking service (which may then retain a copy of the assessment item on its database for the purpose of future plagiarism checking).</p>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="">I understand and agree</label></li>
+</ul>
+<p>I certify that I have read and understood the University Rules in respect of Student Academic Misconduct.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="">I understand and agree</label></li>
+</ul>
+<p>I have a backup copy of the assessment.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="">I understand and agree</label></li>
+</ul>
+</section>
+<section id="statement-on-the-use-of-generative-ai" class="level2">
+<h2 class="anchored" data-anchor-id="statement-on-the-use-of-generative-ai">Statement on the use of generative AI</h2>
+<p><strong><em>Instructions: If you have used Generative AI tools (e.g.&nbsp;ChatGPT, copilot, etc) to help complete this assessment, please state the details here. Your statement should include (i) the name of tool used; (ii) sections or questions that were answered with the help of generative AI; (iii) How generative AI was used. For example you might write “I used Microsoft Copilot to generate template R code for questions 1 and 2, and to help draft my written response to question 4.” If you have not used Generative AI to help complete your assessment, please state this.</em></strong></p>
+</section>
+<section id="section-1" class="level1">
+<h1>Section 1</h1>
+<section id="question-1-dag-used-gen-ai-to-list-out-all-possible-variables-and-from-there-i-can-choose-the-ones-i-think-it-is-important" class="level2">
+<h2 class="anchored" data-anchor-id="question-1-dag-used-gen-ai-to-list-out-all-possible-variables-and-from-there-i-can-choose-the-ones-i-think-it-is-important">Question 1: DAG (Used Gen AI to list out all possible variables, and from there I can choose the ones I think it is important)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'ggdag'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    filter</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the DAG using dagitty syntax</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dag <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag {</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">   "FNP_Participation" -&gt; "Preterm_Birth"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">   "Preterm_Birth" -&gt; "Low_Birth_Weight"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">   "FNP_Participation" -&gt; "Healthcare_Utilization"</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="st">   "Healthcare_Utilization" -&gt; "Maternal_Health"</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">   "Maternal_Health" -&gt; "Low_Birth_Weight"</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="st">   "Maternal_Health" -&gt; "Smoking_Status"</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="st">   "Smoking_Status" -&gt; "Low_Birth_Weight"</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="st">   "Maternal_Age" -&gt; "Low_Birth_Weight"</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="st">   "Maternal_Age" -&gt; "Maternal_Health"</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="st">   "Maternal_Age" -&gt; "FNP_Participation"</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="st">   "Maternal_SES" -&gt; "Low_Birth_Weight"</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="st">   "Maternal_SES" -&gt; "FNP_Participation"</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="st">               }'</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the DAG</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(dag, <span class="at">layout =</span> <span class="st">"circle"</span>) <span class="sc">+</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>() <span class="sc">+</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span> (<span class="st">"DAG: FNP Participation and Birth Outcome"</span>) <span class="sc">+</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dag_node</span>( <span class="at">size =</span> <span class="dv">20</span>, <span class="at">color =</span> <span class="st">"lightgreen"</span>) <span class="sc">+</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dag_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> name), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="submission_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To drawing the DAG for estimating the total and direct effect of Family Nurse Partnership (FNP) participation on aiming to improve the birth outcomes, after reading the paper, I think the key variables are below: 1. Exposure (E): FNP Participation 2. Birth Outcome (O): Low birth weight 3. Maternal Socioeconomic Status (SES): affects both participation and birth outcomes. 4. Maternal Age: Affects participation and birth outcome, because the paper is more focus on adolescent mothers. 5. Maternal Health: Affects both birth outcomes and FNP participation 6. Preterm Birth: A linking variable that influences low birth weight. 7. Smoking Status (SM): affect birth weight and is influenced by maternal health 8. Healthcare Utilization (HU): Affects maternal health and is influences by FNP participation.</p>
+<p>The causal pathway will be: - FNP participation -&gt; Preterm Birth -&gt; Low Birth Weight - Confounders such as Maternal SES, Maternal Health, Maternal Age and Smoking Status would affect both the exposure and the outcome.</p>
+</section>
+<section id="question-2-non-causal-backdoor-paths" class="level2">
+<h2 class="anchored" data-anchor-id="question-2-non-causal-backdoor-paths">Question 2: Non-causal/ Backdoor path(s)</h2>
+<ul>
+<li>Maternal SES -&gt; affects both FNP participation and birth weight outcomes so it creates a non-causal path. To block this backdoor path, this variable should be adjusted in the analysis.</li>
+<li>Maternal Health and Maternal Age are also the confounders need to be controlled as they both influence FNP participation and the likelihood of low birth weight.</li>
+</ul>
+<p>Generally, Maternal SES, Maternal Health and Maternal Age need to be controlled to block the backdoor paths and ensure the analysis captures the true causal effect of FNP on birth outcome.</p>
+</section>
+<section id="question-3-propensity-score-distribution-get-information-from-the-paper-lecture-notes-and-causal3900.github.io" class="level2">
+<h2 class="anchored" data-anchor-id="question-3-propensity-score-distribution-get-information-from-the-paper-lecture-notes-and-causal3900.github.io">Question 3: Propensity Score Distribution (Get information from the paper, lecture notes, and Causal3900.github.io)</h2>
+<p>The paper mentions that the median propensity score for mothers in the FNP program was higher than non-FNP mothers (0.39 vs 0.31), meaning that FNP mothers had more risk factors for adverse outcomes in general. However, the overlap between the propensity scores of the two groups was good, suggesting that the assumption of positivity was likely met. This means that there was enough overlap between the characteristics of FNP mothers and non-FNP mothers to allow for meaningful comparisons through propensity score matching. In summary, the distribution supports the assumption of positivity because mothers in both groups (treated and untreated) had a range of propensity scores that overlapped, making comparisons viable across similar individuals.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="C:/Users/maggi/OneDrive/Documents/GitHub/assessment-1-causal-inference-with-observational-data-Maggie1910\Overlapped%20propensity%20scores.png" class="img-fluid figure-img"></p>
+<figcaption>Overlapped Propensity Scores</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="section-2" class="level1">
+<h1>Section 2</h1>
+<section id="question-1-eda-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="question-1-eda-the-dataset">Question 1: EDA the dataset</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">'fnp-data.Rda'</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+    fnp mat_age ethnicity   deprivation bweight devVuln
+  &lt;int&gt;   &lt;dbl&gt; &lt;fct&gt;             &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;
+1     0      20 Other                 6    2919       0
+2     1      17 White                 9    3643       0
+3     0      19 Other                 7    3455       1
+4     0      24 South Asian           4    3061       0
+5     0      22 White                 5    3045       0
+6     0      22 White                 8    3044       0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"tidyverse"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"Hmisc"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"Hmisc"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'Hmisc'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:dplyr':
+
+    src, summarize</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:ggdag':
+
+    label, label&lt;-</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    format.pval, units</code></pre>
+</div>
+</div>
+<section id="summary-statistics-for-all-variables" class="level3">
+<h3 class="anchored" data-anchor-id="summary-statistics-for-all-variables">Summary statistics for all variables</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      fnp            mat_age            ethnicity     deprivation    
+ Min.   :0.0000   Min.   :16.00   White      :4677   Min.   : 1.000  
+ 1st Qu.:0.0000   1st Qu.:18.00   South Asian:1542   1st Qu.: 3.000  
+ Median :0.0000   Median :20.00   Black      :1192   Median : 6.000  
+ Mean   :0.1599   Mean   :20.46   Other      :3763   Mean   : 5.526  
+ 3rd Qu.:0.0000   3rd Qu.:23.00                      3rd Qu.: 8.000  
+ Max.   :1.0000   Max.   :25.00                      Max.   :10.000  
+    bweight        devVuln      
+ Min.   :2027   Min.   :0.0000  
+ 1st Qu.:2959   1st Qu.:0.0000  
+ Median :3166   Median :0.0000  
+ Mean   :3165   Mean   :0.2091  
+ 3rd Qu.:3372   3rd Qu.:0.0000  
+ Max.   :4177   Max.   :1.0000  </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>summarise_raw_data <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">describe</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>summarise_raw_data </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>. 
+
+ 6  Variables      11174  Observations
+--------------------------------------------------------------------------------
+fnp 
+       n  missing distinct     Info      Sum     Mean      Gmd 
+   11174        0        2    0.403     1787   0.1599   0.2687 
+
+--------------------------------------------------------------------------------
+mat_age 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+   11174        0       10     0.99    20.46    3.297       16       17 
+     .25      .50      .75      .90      .95 
+      18       20       23       24       25 
+                                                                      
+Value         16    17    18    19    20    21    22    23    24    25
+Frequency   1108  1219  1084  1095  1118  1116  1177  1068  1096  1093
+Proportion 0.099 0.109 0.097 0.098 0.100 0.100 0.105 0.096 0.098 0.098
+
+For the frequency table, variable is rounded to the nearest 0
+--------------------------------------------------------------------------------
+ethnicity 
+       n  missing distinct 
+   11174        0        4 
+                                                          
+Value            White South Asian       Black       Other
+Frequency         4677        1542        1192        3763
+Proportion       0.419       0.138       0.107       0.337
+--------------------------------------------------------------------------------
+deprivation 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+   11174        0       10     0.99    5.526    3.288        1        2 
+     .25      .50      .75      .90      .95 
+       3        6        8       10       10 
+                                                                      
+Value          1     2     3     4     5     6     7     8     9    10
+Frequency   1076  1123  1069  1173  1124  1099  1146  1122  1111  1131
+Proportion 0.096 0.101 0.096 0.105 0.101 0.098 0.103 0.100 0.099 0.101
+
+For the frequency table, variable is rounded to the nearest 0
+--------------------------------------------------------------------------------
+bweight 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+   11174        0     1516        1     3165    344.9     2667     2769 
+     .25      .50      .75      .90      .95 
+    2959     3166     3372     3560     3662 
+
+lowest : 2027 2065 2086 2092 2163, highest: 4116 4130 4149 4155 4177
+--------------------------------------------------------------------------------
+devVuln 
+       n  missing distinct     Info      Sum     Mean      Gmd 
+   11174        0        2    0.496     2337   0.2091   0.3308 
+
+--------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+<p>Summary Statistics: The data set consists 6 variables related to FNP participation: maternal age, ethnicity, area deprivation, birth weight, and development vulnerability, and 11,174 observations. There is no missing values.</p>
+</section>
+<section id="table-for-fnp-participation" class="level3">
+<h3 class="anchored" data-anchor-id="table-for-fnp-participation">Table for FNP participation</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>fnp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   0    1 
+9387 1787 </code></pre>
+</div>
+</div>
+<p>We can see the above data for FNP participation, among the cohort, only 1,787 is FNP mothers, and 9,387 is non-FNP mothers.</p>
+</section>
+<section id="check-structure-of-dataframe" class="level3">
+<h3 class="anchored" data-anchor-id="check-structure-of-dataframe">Check structure of dataframe</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [11,174 × 6] (S3: tbl_df/tbl/data.frame)
+ $ fnp        : int [1:11174] 0 1 0 0 0 0 0 1 1 0 ...
+ $ mat_age    : num [1:11174] 20 17 19 24 22 22 22 19 18 16 ...
+ $ ethnicity  : Factor w/ 4 levels "White","South Asian",..: 4 1 4 2 1 1 4 1 1 1 ...
+ $ deprivation: int [1:11174] 6 9 7 4 5 8 6 9 9 9 ...
+ $ bweight    : num [1:11174] 2919 3643 3455 3061 3045 ...
+ $ devVuln    : int [1:11174] 0 0 1 0 0 0 0 0 0 1 ...</code></pre>
+</div>
+</div>
+</section>
+<section id="distribution-of-birthweight" class="level3">
+<h3 class="anchored" data-anchor-id="distribution-of-birthweight">Distribution of birthweight</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>bweight, <span class="at">main =</span> <span class="st">"Distribution of Birthweight"</span>, <span class="at">xlab =</span> <span class="st">"Birthweight (grams)"</span>, <span class="at">col =</span> <span class="st">"lightblue"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="submission_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The histogram shows that birth weights are mostly centered around the average range, with a slightly noticeable portion below 2,500g.</p>
+</section>
+<section id="proportion-of-low-birthweight-babies-2500g" class="level3">
+<h3 class="anchored" data-anchor-id="proportion-of-low-birthweight-babies-2500g">Proportion of low birthweight babies (&lt;2,500g)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>low_birthweight <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df<span class="sc">$</span>bweight <span class="sc">&lt;</span><span class="dv">2500</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>low_birthweight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    0     1 
+11012   162 </code></pre>
+</div>
+</div>
+<p>Regarding table above, out of 11,174 babies, there are 162 babies under 2,500g (low birthweight). 11,012 babies have birthweights above or equal to 2,500g. ### Maternal age distribution</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>mat_age, <span class="at">main =</span> <span class="st">"Distribution of Maternal Age"</span>, <span class="at">xlab =</span> <span class="st">"Age"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="submission_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The histogram above shows that most mothers are in their late teens or early 20s.</p>
+</section>
+<section id="association-between-fnp-participation-and-low-birthweight" class="level3">
+<h3 class="anchored" data-anchor-id="association-between-fnp-participation-and-low-birthweight">Association between FNP participation and low birthweight</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>fnp, df<span class="sc">$</span>low_birthweight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   
+       0    1
+  0 9279  108
+  1 1733   54</code></pre>
+</div>
+</div>
+<p>From the table above, we can see that it seems higher proportion of low birthweight in FNP mothers because it’s only 1.15% of babies are born with low birthweight among non-FNP mothers, while it’s 3.02% of babies are born with low birthweight among FNP mothers.</p>
+</section>
+<section id="association-between-deprivation-and-low-birthweight" class="level3">
+<h3 class="anchored" data-anchor-id="association-between-deprivation-and-low-birthweight">Association between deprivation and low birthweight</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(df<span class="sc">$</span>bweight <span class="sc">~</span> df<span class="sc">$</span>deprivation, <span class="at">main =</span> <span class="st">"Birthweight by Depriviation"</span>, <span class="at">xlab =</span> <span class="st">"Depriviation Level"</span>, <span class="at">ylab =</span> <span class="st">"Birthweight (grams)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="submission_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can see on the boxplot above, as the deprivation level increase, there shows to be slight decrease in median birthweight, which means it may appear negative assiciation between deprivation and birthweight (higher deprivation is associated with lower birthweight on average).</p>
+</section>
+</section>
+<section id="question-2-matching-to-evaluate-the-effect-on-low-birthweight-reference-on-lecture-notes-and-causal3900.github.io" class="level2">
+<h2 class="anchored" data-anchor-id="question-2-matching-to-evaluate-the-effect-on-low-birthweight-reference-on-lecture-notes-and-causal3900.github.io">Question 2: Matching to evaluate the effect on Low birthweight (Reference on lecture notes and Causal3900.github.io)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"MatchIt"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"MatchIt"</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MatchIt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define low birthweight as the outcome</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>low_birthweight <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df<span class="sc">$</span>bweight <span class="sc">&lt;</span><span class="dv">2500</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Propensity score matching on FNP mothers</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>matchit_model <span class="ot">&lt;-</span> <span class="fu">matchit</span>(fnp <span class="sc">~</span> mat_age <span class="sc">+</span> deprivation <span class="sc">+</span> ethnicity, <span class="at">data =</span> df, <span class="at">method =</span> <span class="st">"nearest"</span>, <span class="at">ratio =</span> <span class="dv">1</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of the matching process</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(matchit_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+matchit(formula = fnp ~ mat_age + deprivation + ethnicity, data = df, 
+    method = "nearest", ratio = 1)
+
+Summary of Balance for All Data:
+                     Means Treated Means Control Std. Mean Diff. Var. Ratio
+distance                    0.3714        0.1197          1.1647     2.0457
+mat_age                    18.0504       20.9220         -1.7474     0.3387
+deprivation                 7.1186        5.2222          0.7479     0.8085
+ethnicityWhite              0.2927        0.4425         -0.3294          .
+ethnicitySouth Asian        0.1673        0.1324          0.0935          .
+ethnicityBlack              0.1315        0.1019          0.0875          .
+ethnicityOther              0.4085        0.3231          0.1737          .
+                     eCDF Mean eCDF Max
+distance                0.3589   0.5620
+mat_age                 0.2872   0.4724
+deprivation             0.1896   0.2936
+ethnicityWhite          0.1499   0.1499
+ethnicitySouth Asian    0.0349   0.0349
+ethnicityBlack          0.0296   0.0296
+ethnicityOther          0.0854   0.0854
+
+Summary of Balance for Matched Data:
+                     Means Treated Means Control Std. Mean Diff. Var. Ratio
+distance                    0.3714        0.3431          0.1311     1.3674
+mat_age                    18.0504       17.9978          0.0320     0.9796
+deprivation                 7.1186        6.7314          0.1527     1.0641
+ethnicityWhite              0.2927        0.3257         -0.0726          .
+ethnicitySouth Asian        0.1673        0.1550          0.0330          .
+ethnicityBlack              0.1315        0.1360         -0.0132          .
+ethnicityOther              0.4085        0.3833          0.0512          .
+                     eCDF Mean eCDF Max Std. Pair Dist.
+distance                0.0105   0.0963          0.1311
+mat_age                 0.0053   0.0246          0.3208
+deprivation             0.0387   0.0968          0.3447
+ethnicityWhite          0.0330   0.0330          0.3973
+ethnicitySouth Asian    0.0123   0.0123          0.4438
+ethnicityBlack          0.0045   0.0045          0.4107
+ethnicityOther          0.0252   0.0252          0.5954
+
+Sample Sizes:
+          Control Treated
+All          9387    1787
+Matched      1787    1787
+Unmatched    7600       0
+Discarded       0       0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create matched dataset</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> <span class="fu">match.data</span>(matchit_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can see there is a significant difference of eCDF Mean and eCDF Max between the raw data and matched data. In the matched data, eCDF Mean and eCDF Max are much smaller compare to matched data. eCDF Mean and eCDF Max represent measures of imbalance based on the empirical cumulative distribution functions, the higher values, the more imbalance dataset.</p>
+<p>In the samples sizes table, we can see there are 7,600 unmatched control individuals, which were not used in the analysis after matching.</p>
+<p>In short, before matching, there were significant imbalances (e.g., large standardized mean differences), but after matching, these differences have been reduced, making the treated and control groups more comparable.</p>
+</section>
+<section id="question-3-summarising-balance-before-and-after-matching" class="level2">
+<h2 class="anchored" data-anchor-id="question-3-summarising-balance-before-and-after-matching">Question 3: Summarising Balance Before and After Matching</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Before matching balance</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df[, <span class="fu">c</span>(<span class="st">"fnp"</span>, <span class="st">"mat_age"</span>, <span class="st">"deprivation"</span>, <span class="st">"ethnicity"</span>,<span class="st">"low_birthweight"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      fnp            mat_age       deprivation           ethnicity   
+ Min.   :0.0000   Min.   :16.00   Min.   : 1.000   White      :4677  
+ 1st Qu.:0.0000   1st Qu.:18.00   1st Qu.: 3.000   South Asian:1542  
+ Median :0.0000   Median :20.00   Median : 6.000   Black      :1192  
+ Mean   :0.1599   Mean   :20.46   Mean   : 5.526   Other      :3763  
+ 3rd Qu.:0.0000   3rd Qu.:23.00   3rd Qu.: 8.000                     
+ Max.   :1.0000   Max.   :25.00   Max.   :10.000                     
+ low_birthweight 
+ Min.   :0.0000  
+ 1st Qu.:0.0000  
+ Median :0.0000  
+ Mean   :0.0145  
+ 3rd Qu.:0.0000  
+ Max.   :1.0000  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># After matching balance</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(matched_data[,<span class="fu">c</span>(<span class="st">"fnp"</span>, <span class="st">"mat_age"</span>, <span class="st">"deprivation"</span>, <span class="st">"ethnicity"</span>,<span class="st">"low_birthweight"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      fnp         mat_age       deprivation           ethnicity   
+ Min.   :0.0   Min.   :16.00   Min.   : 1.000   White      :1105  
+ 1st Qu.:0.0   1st Qu.:17.00   1st Qu.: 5.000   South Asian: 576  
+ Median :0.5   Median :18.00   Median : 7.000   Black      : 478  
+ Mean   :0.5   Mean   :18.02   Mean   : 6.925   Other      :1415  
+ 3rd Qu.:1.0   3rd Qu.:19.00   3rd Qu.: 9.000                     
+ Max.   :1.0   Max.   :21.00   Max.   :10.000                     
+ low_birthweight  
+ Min.   :0.00000  
+ 1st Qu.:0.00000  
+ Median :0.00000  
+ Mean   :0.03469  
+ 3rd Qu.:0.00000  
+ Max.   :1.00000  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking covariate balance with plots</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">summary</span>(matchit_model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="submission_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Before matching, there is an imbalance in maternal age, deprivation, and ethnicity between FNP and non-FNP mothers. After matching, the covariates are more balanced between the groups, reducing bias while doing analysis. When we look into the graph, it is obvious that there is an improvement in balance of covariates between treated and control group. Initially, there was a significant imbalance for variables like distance, mat_age, and deprivation. However, after matching, all covariates have ASMD values below the threshold which means that the treated and control groups are now more comparable.</p>
+</section>
+<section id="question-4-linear-model-to-estimate-effect-reference-from-lecture-notes-and-hdat-9600" class="level2">
+<h2 class="anchored" data-anchor-id="question-4-linear-model-to-estimate-effect-reference-from-lecture-notes-and-hdat-9600">Question 4: Linear Model to estimate effect (Reference from lecture notes and HDAT 9600)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear model on raw data</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>raw_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(low_birthweight <span class="sc">~</span> fnp <span class="sc">+</span> mat_age <span class="sc">+</span> deprivation <span class="sc">+</span> ethnicity, <span class="at">data =</span> df, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(raw_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = low_birthweight ~ fnp + mat_age + deprivation + 
+    ethnicity, family = "binomial", data = df)
+
+Coefficients:
+                     Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)          -1.37007    0.74381  -1.842 0.065481 .  
+fnp                  -0.52628    0.19021  -2.767 0.005661 ** 
+mat_age              -0.34483    0.03660  -9.421  &lt; 2e-16 ***
+deprivation           0.51930    0.04476  11.602  &lt; 2e-16 ***
+ethnicitySouth Asian  0.81047    0.22400   3.618 0.000297 ***
+ethnicityBlack       -0.40113    0.36568  -1.097 0.272666    
+ethnicityOther        0.30856    0.19295   1.599 0.109780    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1693.4  on 11173  degrees of freedom
+Residual deviance: 1379.4  on 11167  degrees of freedom
+AIC: 1393.4
+
+Number of Fisher Scoring iterations: 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear model on matched data</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>matched_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(low_birthweight <span class="sc">~</span> fnp <span class="sc">+</span> mat_age <span class="sc">+</span> deprivation <span class="sc">+</span> ethnicity, <span class="at">data =</span> matched_data, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(matched_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = low_birthweight ~ fnp + mat_age + deprivation + 
+    ethnicity, family = "binomial", data = matched_data)
+
+Coefficients:
+                     Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)          -1.91806    1.14046  -1.682  0.09260 .  
+fnp                  -0.54277    0.19220  -2.824  0.00474 ** 
+mat_age              -0.28246    0.06285  -4.494 6.98e-06 ***
+deprivation           0.46365    0.05853   7.921 2.35e-15 ***
+ethnicitySouth Asian  0.64709    0.26777   2.417  0.01567 *  
+ethnicityBlack       -0.38409    0.39810  -0.965  0.33464    
+ethnicityOther        0.33218    0.22344   1.487  0.13711    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1077.21  on 3573  degrees of freedom
+Residual deviance:  968.11  on 3567  degrees of freedom
+AIC: 982.11
+
+Number of Fisher Scoring iterations: 7</code></pre>
+</div>
+</div>
+<p>In the model 1 (Logistic Regression on the original data), base on the p-values, variables are highly significant are mat_age, deprivation, ethnicity South Asian. However, in the model 2 (Logistic Regression on the matched data), the highly significant variables down to 2 which are mat_age and deprivation. Variable ethnicity South Asian is significant.</p>
+<p>Regarding to model fit, it is obvious that Model 2 is better fit after matching due to AIC ratio, the first one is 1393.4 and the 2nd is 982.11.</p>
+</section>
+<section id="question-5-positivity-and-consistenct-assumptions-reference-from-causal3900.github.io" class="level2">
+<h2 class="anchored" data-anchor-id="question-5-positivity-and-consistenct-assumptions-reference-from-causal3900.github.io">Question 5: Positivity and Consistenct Assumptions (Reference from Causal3900.github.io)</h2>
+<ul>
+<li>Positivity: The interpretation of the positivity assumption is that there must be a non-zero probability of having treated and untreated individuals across all strata defined by the confounders.( From “Consistency, conditional exchangeability and positivity in hypothetical weight change interventions”). In this case, since there is a good overlap between FNP and non-FNP participants across covariates after matching, the positivity assumption can happen.</li>
+<li>Consistency: The observed outcome equals the potential outcome that corresponds to given treatment. The matched groups have similar covariate distributions, it is assumed that the treatment effect on FNP mothers on birthweight is consistent across matched data. However, the possibility of unmeasured confoundinh could challenge this assumption.</li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
